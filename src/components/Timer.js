@@ -3,8 +3,8 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 
 function Timer() {
-  const [seconds, setSeconds] = useState(5);
-  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(25);
   const [isDone, setIsDone] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
 
@@ -39,8 +39,8 @@ function Timer() {
         <ActionBtn
           isDone={isDone}
           onClick={() => {
-            setSeconds(5);
-            setMinutes(0);
+            setSeconds(0);
+            setMinutes(25);
             setIsDone(false);
             setIsStarted(!isStarted);
           }}
@@ -71,7 +71,16 @@ const ActionBtn = styled.button`
   height: 15vw;
   border-radius: 200px;
   font-size: 30px;
-  background-color: ${(props) => (props.isDone ? "red" : "blue")};
+  background-color: ${(props) =>
+    props.isDone ? "red" : "rgba(141, 139, 255, 0.4)"};
+  color: rgba(222, 222, 222, 0.8);
+  transition-duration: 200ms;
+
+  &:hover {
+    color: rgba(252, 252, 252, 0.8);
+    background-color: rgba(141, 139, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
 `;
 
 export default Timer;
