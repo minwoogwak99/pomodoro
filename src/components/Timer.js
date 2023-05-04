@@ -3,9 +3,10 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 
 function Timer() {
-  const [seconds, setSeconds] = useState(3);
-  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(5);
+  const [minutes, setMinutes] = useState(1);
   const [isDone, setIsDone] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
 
   const timeReducer = () => {
     if (seconds === 0) {
@@ -17,16 +18,17 @@ function Timer() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => timeReducer(), 1000);
-    console.log(seconds);
+    if (isStarted) {
+      const interval = setInterval(() => timeReducer(), 1000);
+      console.log(seconds);
 
-    if (minutes === 0 && seconds === 0) {
-      clearInterval(interval);
-      setIsDone(true);
+      if (minutes === 0 && seconds === 0) {
+        clearInterval(interval);
+        setIsDone(true);
+      }
+      return () => clearInterval(interval);
     }
-
-    return () => clearInterval(interval);
-  }, [seconds, minutes]);
+  }, [seconds, minutes, isStarted]);
 
   return (
     <div>
@@ -37,12 +39,13 @@ function Timer() {
         <ActionBtn
           isDone={isDone}
           onClick={() => {
-            setSeconds(3);
+            setSeconds(5);
             setMinutes(0);
             setIsDone(false);
+            setIsStarted(!isStarted);
           }}
         >
-          Reset
+          {isStarted ? "Reset" : "Start"}
         </ActionBtn>
       </MainContainer>
     </div>
